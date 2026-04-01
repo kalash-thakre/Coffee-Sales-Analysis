@@ -1,7 +1,6 @@
 # ☕ Coffee Sales Analysis
 
 ![SQL](https://img.shields.io/badge/SQL-BigQuery%20%7C%20MySQL-blue)
-![Status](https://img.shields.io/badge/status-complete-brightgreen)
 
 End-to-end SQL analysis of coffee sales data across BigQuery and MySQL, covering revenue trends, customer segmentation, product profitability, and temporal purchasing patterns.
 
@@ -47,6 +46,7 @@ coffee-sales-analysis/
 ├── docs/
 │   ├── image_1.png
 │   ├── image_2.png
+│   ├── image_3.png
 │   └── schema.png
 ├── README.md
 ├── coffee_sales_bigquery.sql
