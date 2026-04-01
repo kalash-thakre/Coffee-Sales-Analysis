@@ -1,6 +1,7 @@
+-- Big Query (SQL)
+
 -- Q.1 Coffee Consumers Count
 -- How many people in each city are estimated to consume coffee, given that 25% of the population does?
-
 select 
 	city_name,
 	round((population * 0.25)/1000000,2) as customers_millions,
@@ -12,13 +13,13 @@ order by 2 desc;
 -- What is the total revenue generated from coffee sales across all cities in the last quarter of 2023?
 with cte as (
   select
-	  c.city_name,
-    sum(s.total) as revenue,
-    extract(year from s.sale_date) as `year`,
-    extract(quarter from s.sale_date) `quarter`
-from `coffee-492003.Coffee_sales.Sales` s 
-join `coffee-492003.Coffee_sales.Customers` cs on cs.customer_id = s.customer_id
-join `coffee-492003.Coffee_sales.City` c on c.city_id = cs.city_id
+	 	c.city_name,
+    	sum(s.total) as revenue,
+    	extract(year from s.sale_date) as `year`,
+    	extract(quarter from s.sale_date) `quarter`
+	from `coffee-492003.Coffee_sales.Sales` s 
+	join `coffee-492003.Coffee_sales.Customers` cs on cs.customer_id = s.customer_id
+	join `coffee-492003.Coffee_sales.City` c on c.city_id = cs.city_id
 group by 
 	c.city_id,
     c.city_name,
@@ -41,7 +42,8 @@ from `coffee-492003.Coffee_sales.Sales` s
 join `coffee-492003.Coffee_sales.Products` p using(product_id)
 group by 
 	p.product_name
-having lower(product_name) like '%coffee%'
+having 
+	lower(product_name) like '%coffee%'
 order by cnt desc;
 
 -- Average Sales Amount per City
@@ -61,7 +63,6 @@ order by avg_sales desc;
 
 -- City Population and Coffee Consumers
 -- Provide a list of cities along with their populations and estimated coffee consumers.
-
 select
 	  c.city_name,
     round(c.population/1000000 ,2) as customers_millions,
@@ -72,13 +73,10 @@ join `coffee-492003.Coffee_sales.City` c on c.city_id = cs.city_id
 group by 
 	  c.city_id,
 	  c.city_name,
-    c.population;
-
+      c.population;
 
 -- Top Selling Products by City
 -- What are the top 3 selling products in each city based on sales volume?
-
-
 with ranked as (
     select
         c.city_name,
@@ -112,7 +110,6 @@ order by
 
 -- Customer Segmentation by City
 -- How many unique customers are there in each city who have purchased coffee products?
-
 select 	
 	  c.city_name,
 	  count(distinct cs.customer_id) as unique_customer
@@ -127,7 +124,6 @@ group by
 	
 -- Average Sale vs Rent
 -- Find each city and their average sale per customer and avg rent per customer
-
 select
 	c.city_name,
       round(sum(s.total) / count(distinct cs.customer_id),2) as avg_sales,
@@ -141,7 +137,6 @@ group by
 
 -- Monthly Sales Growth
 -- Sales growth rate: Calculate the percentage growth (or decline) in sales over different time periods (monthly).
-
 with monthly_sales as (
     select
         extract(year from s.sale_date) as sale_year,
